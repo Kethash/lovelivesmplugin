@@ -22,12 +22,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 public class CustomEffect implements Listener {
 
     private final int pickupCooldown = 60;
 
-    private Map<Entity, Long> entityPickupCooldown = new HashMap<>();
+    private final Map<Entity, Long> entityPickupCooldown = new HashMap<>();
 
     private final Map<Material, String> specialItemPickups = new HashMap<>(){{
         put(Material.DIAMOND, "Takusan no kibou to kirameki noseta uta o utaou\nKono daiamondo\n" +
@@ -59,10 +60,10 @@ public class CustomEffect implements Listener {
        */
     }};
 
-    private List<Player> umiBiomesPlayers = new ArrayList<>();
-    private List<Player> evergreenPlayers = new ArrayList<>();
+    private final List<Player> umiBiomesPlayers = new ArrayList<>();
+    private final List<Player> evergreenPlayers = new ArrayList<>();
 
-    private Map<String, Integer> milkDrinkers = new HashMap<>();
+    private final Map<String, Integer> milkDrinkers = new HashMap<>();
     @EventHandler
     public void MilkEvent(PlayerItemConsumeEvent e) {
 
@@ -123,7 +124,9 @@ public class CustomEffect implements Listener {
         // Replaces the creeper's explosion by a cookie drop
         e.setCancelled(true);
         Location creeperLocation = e.getLocation();
+        int randomGP = new Random().nextInt(3);
         creeperLocation.getWorld().dropItemNaturally(creeperLocation, new CustomCookie(3));
+        if(randomGP != 0) creeperLocation.getWorld().dropItemNaturally(creeperLocation, new ItemStack(Material.GUNPOWDER, randomGP));
     }
 
 }

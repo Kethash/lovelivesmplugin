@@ -1,8 +1,5 @@
 import Commands.CommandUtilities;
-import Events.ChatEvent;
-import Events.CustomEffect;
-import Events.MainEvents;
-import Events.PlayerDeath;
+import Events.*;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -20,7 +17,7 @@ public class LoveLiveSMPlugin extends JavaPlugin {
             put("alert", new CommandUtilities());
         }};
 
-        Listener[] events = new Listener[] {new MainEvents(), new PlayerDeath(), new CustomEffect(), new ChatEvent()};
+        Listener[] events = new Listener[] {new MainEvents(), new PlayerDeath(), new CustomEffect(), new ChatEvent(), new PlayerDamage()};
 
         for (Listener event : events) {
             getServer().getPluginManager().registerEvents(event, this);
