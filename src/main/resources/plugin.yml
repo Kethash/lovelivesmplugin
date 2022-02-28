@@ -1,3 +1,10 @@
 name: LoveLiveSMPlugin
 version: 1.0
 main: LoveLiveSMPlugin
+commands:
+  informations:
+    description: Get all informations about YohaNico server
+    usage: "/informations"
+  alert:
+    description: Warn a player
+    usage: "/alert [player]"

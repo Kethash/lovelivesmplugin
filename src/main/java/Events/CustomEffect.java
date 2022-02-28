@@ -2,15 +2,20 @@ package Events;
 
 
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Biome;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.entity.EntityPickupItemEvent;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.inventory.ItemStack;
+import structures.CustomCookie;
 
 
 import java.util.ArrayList;
@@ -43,12 +48,15 @@ public class CustomEffect implements Listener {
 
     private final List<Biome> evergreenBiomes = new ArrayList<>() {{
        add(Biome.TAIGA);
+       add(Biome.SNOWY_TAIGA);
+       /*
        add(Biome.TAIGA_HILLS);
        add(Biome.TAIGA_MOUNTAINS);
        add(Biome.GIANT_SPRUCE_TAIGA);
        add(Biome.GIANT_TREE_TAIGA);
        add(Biome.GIANT_SPRUCE_TAIGA_HILLS);
        add(Biome.GIANT_TREE_TAIGA_HILLS);
+       */
     }};
 
     private List<Player> umiBiomesPlayers = new ArrayList<>();
@@ -84,10 +92,10 @@ public class CustomEffect implements Listener {
         Biome loc = p.getLocation().getBlock().getBiome();
 
         if(this.umiBiomes.contains(loc) && !this.umiBiomesPlayers.contains(p)){
-            Bukkit.broadcastMessage(String.format("<%s> 海を見ているといい気分になる。", p.getName()));
+            Bukkit.broadcastMessage(String.format("§a<%s> 海を見ているといい気分になる。", p.getName()));
             this.umiBiomesPlayers.add(p);
         } else if (this.evergreenBiomes.contains(loc) && !this.evergreenPlayers.contains(p)) {
-            Bukkit.broadcastMessage(String.format("<%s> Dokomademo hirogatte iru evaaguriin to sora", p.getName()));
+            Bukkit.broadcastMessage(String.format("§a<%s> Dokomademo hirogatte iru evaaguriin to sora", p.getName()));
             this.evergreenPlayers.add(p);
         }
     }
@@ -105,6 +113,17 @@ public class CustomEffect implements Listener {
             Bukkit.broadcastMessage(String.format("<%s> %s",e.getName(),specialItemPickups.get(item)));
             this.entityPickupCooldown.put(e, System.currentTimeMillis() + this.pickupCooldown*1000);
         }
-
     }
+
+    @EventHandler
+    public void creeperExplodes(EntityExplodeEvent e) {
+        // Check if the entity is a creeper
+        if(!e.getEntityType().equals(EntityType.CREEPER)) return;
+
+        // Replaces the creeper's explosion by a cookie drop
+        e.setCancelled(true);
+        Location creeperLocation = e.getLocation();
+        creeperLocation.getWorld().dropItemNaturally(creeperLocation, new CustomCookie(3));
+    }
+
 }
