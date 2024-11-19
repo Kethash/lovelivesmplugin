@@ -43,12 +43,9 @@ public class CustomEffect implements Listener {
 
     private final List<Biome> evergreenBiomes = new ArrayList<>() {{
        add(Biome.TAIGA);
-       add(Biome.TAIGA_HILLS);
-       add(Biome.TAIGA_MOUNTAINS);
-       add(Biome.GIANT_SPRUCE_TAIGA);
-       add(Biome.GIANT_TREE_TAIGA);
-       add(Biome.GIANT_SPRUCE_TAIGA_HILLS);
-       add(Biome.GIANT_TREE_TAIGA_HILLS);
+       add(Biome.OLD_GROWTH_PINE_TAIGA);
+       add(Biome.SNOWY_TAIGA);
+       add(Biome.OLD_GROWTH_SPRUCE_TAIGA);
     }};
 
     private List<Player> umiBiomesPlayers = new ArrayList<>();
